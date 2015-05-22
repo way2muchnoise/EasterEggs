@@ -10,7 +10,7 @@ public class Reference
 
     public static final String DESCRIPTION = "This might be adding easter eggs to your game";
 
-    public static final String[] AUTHORS = new String[]{};
+    public static final String[] AUTHORS = new String[]{ "way2muchnoise" };
 
     // Main version information that will be displayed in mod listing and for other purposes.
     public static final String V_MAJOR = "@MAJOR@";
