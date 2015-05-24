@@ -45,14 +45,6 @@ public abstract class KeyChain
 
     public static void init()
     {
-        add(new KeyChain("KLM testCode", "klm")
-        {
-            @Override
-            protected void execute()
-            {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("You found the test KLM cheat");
-            }
-        });
         add(new KeyChain("Konami Code", 200, 200, 208, 208, 203, 205, 203, 205, Keyboard.KEY_B, Keyboard.KEY_A)
         {
             @Override
