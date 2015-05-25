@@ -1,13 +1,21 @@
 package eastereggs.key;
 
+import eastereggs.network.MessageHandler;
+import eastereggs.network.message.KeyChainMessage;
 import eastereggs.utils.LogHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.input.Keyboard;
 
 public abstract class KeyChain
 {
     private int[] codeChain;
     private String id;
+
+    public String id()
+    {
+        return this.id;
+    }
 
     private KeyChain(String id, String textCode)
     {
@@ -29,14 +37,16 @@ public abstract class KeyChain
         if (codeChain[index] != code) return false;
         if (index+1 == codeChain.length)
         {
-            this.execute();
+            this.executeClientSide();
             LogHelper.debug("Executed cheat with id: " + this.id);
             return false;
         }
         return true;
     }
 
-    protected abstract void execute();
+    protected abstract void executeClientSide();
+
+    public abstract void executeServerSide(EntityPlayer player);
 
     private static void add(KeyChain chain)
     {
@@ -48,9 +58,16 @@ public abstract class KeyChain
         add(new KeyChain("Konami Code", 200, 200, 208, 208, 203, 205, 203, 205, Keyboard.KEY_B, Keyboard.KEY_A)
         {
             @Override
-            protected void execute()
+            protected void executeClientSide()
             {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("Dat Konami Code");
+                MessageHandler.INSTANCE.sendToServer(new KeyChainMessage(this.id()));
+            }
+
+            @Override
+            public void executeServerSide(EntityPlayer player)
+            {
+                player.addExperience(100);
             }
         });
     }

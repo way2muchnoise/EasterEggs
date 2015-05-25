@@ -1,5 +1,6 @@
 package eastereggs;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;
@@ -9,6 +10,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import eastereggs.event.KeyboardInput;
 import eastereggs.key.KeyChain;
+import eastereggs.network.MessageHandler;
 import eastereggs.reference.Metadata;
 import eastereggs.reference.Reference;
 
@@ -31,6 +33,7 @@ public class EasterEggs
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
+        MessageHandler.init();
     }
 
     @Mod.EventHandler
