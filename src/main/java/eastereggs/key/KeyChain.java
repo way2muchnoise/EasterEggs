@@ -37,16 +37,38 @@ public abstract class KeyChain
         if (codeChain[index] != code) return false;
         if (index+1 == codeChain.length)
         {
-            this.executeClientSide();
+            this.execute();
             LogHelper.debug("Executed cheat with id: " + this.id);
             return false;
         }
         return true;
     }
 
-    protected abstract void executeClientSide();
+    /**
+     * Executes ClientSide code and sends message to server for ServerSide execution
+     */
+    private void execute()
+    {
+        MessageHandler.INSTANCE.sendToServer(new KeyChainMessage(this.id()));
+        executeClientSide();
+    }
 
-    public abstract void executeServerSide(EntityPlayer player);
+    /**
+     * Code executed on ClientSide
+     */
+    protected void executeClientSide()
+    {
+
+    }
+
+    /**
+     * Code executed on ServerSide
+     * @param player the player who preformed the key chain
+     */
+    public void executeServerSide(EntityPlayer player)
+    {
+
+    }
 
     private static void add(KeyChain chain)
     {
@@ -61,7 +83,6 @@ public abstract class KeyChain
             protected void executeClientSide()
             {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("Dat Konami Code");
-                MessageHandler.INSTANCE.sendToServer(new KeyChainMessage(this.id()));
             }
 
             @Override
