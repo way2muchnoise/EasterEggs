@@ -25,6 +25,15 @@ public abstract class KeyChain
             this.codeChain[i] = Keyboard.getKeyIndex(("" + textCode.charAt(i)).toUpperCase());
     }
 
+    private KeyChain(String id, String... textCodes)
+    {
+        this.id = id;
+        this.codeChain = new int[textCodes.length];
+        int i = 0;
+        for (String textCode : textCodes)
+            this.codeChain[i++] = Keyboard.getKeyIndex(textCode.toUpperCase());
+    }
+
     private KeyChain(String id, int... keyCodes)
     {
         this.id = id;
@@ -77,7 +86,7 @@ public abstract class KeyChain
 
     public static void init()
     {
-        add(new KeyChain("Konami Code", 200, 200, 208, 208, 203, 205, 203, 205, Keyboard.KEY_B, Keyboard.KEY_A)
+        add(new KeyChain("Konami Code", "up", "up", "down", "down", "left", "right", "left", "right", "b", "a")
         {
             @Override
             protected void executeClientSide()
