@@ -3,7 +3,7 @@ package eastereggs.network.message;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import eastereggs.key.KeyChain;
+import eastereggs.api.IKeyChain;
 import eastereggs.key.KeyChainRegistry;
 import io.netty.buffer.ByteBuf;
 
@@ -39,7 +39,7 @@ public class KeyChainMessage implements IMessage, IMessageHandler<KeyChainMessag
     @Override
     public IMessage onMessage(KeyChainMessage message, MessageContext ctx)
     {
-        KeyChain keyChain = KeyChainRegistry.instance().getById(message.id);
+        IKeyChain keyChain = KeyChainRegistry.instance().getById(message.id);
         if (keyChain != null)
             keyChain.executeServerSide(ctx.getServerHandler().playerEntity);
         return null;

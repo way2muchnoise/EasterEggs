@@ -1,13 +1,11 @@
 package eastereggs.key;
 
-import eastereggs.network.MessageHandler;
-import eastereggs.network.message.KeyChainMessage;
-import eastereggs.utils.LogHelper;
+import eastereggs.api.IKeyChain;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.input.Keyboard;
 
-public abstract class KeyChain
+public abstract class KeyChain implements IKeyChain
 {
     private int[] codeChain;
     private String id;
@@ -42,41 +40,13 @@ public abstract class KeyChain
 
     public boolean isCodeAt(int index, int code)
     {
-        if (index >= codeChain.length) return false;
-        if (codeChain[index] != code) return false;
-        if (index+1 == codeChain.length)
-        {
-            this.execute();
-            LogHelper.debug("Executed cheat with id: " + this.id);
-            return false;
-        }
-        return true;
+        return index < codeChain.length && codeChain[index] == code;
     }
 
-    /**
-     * Executes ClientSide code and sends message to server for ServerSide execution
-     */
-    private void execute()
+    @Override
+    public boolean isLastCode(int index)
     {
-        MessageHandler.INSTANCE.sendToServer(new KeyChainMessage(this.id()));
-        executeClientSide();
-    }
-
-    /**
-     * Code executed on ClientSide
-     */
-    protected void executeClientSide()
-    {
-
-    }
-
-    /**
-     * Code executed on ServerSide
-     * @param player the player who preformed the key chain
-     */
-    public void executeServerSide(EntityPlayer player)
-    {
-
+        return index+1 == codeChain.length;
     }
 
     private static void add(KeyChain chain)
@@ -89,7 +59,7 @@ public abstract class KeyChain
         add(new KeyChain("Konami Code", "up", "up", "down", "down", "left", "right", "left", "right", "b", "a")
         {
             @Override
-            protected void executeClientSide()
+            public void executeClientSide()
             {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("Dat Konami Code");
             }
