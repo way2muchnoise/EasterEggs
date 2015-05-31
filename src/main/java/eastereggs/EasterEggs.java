@@ -1,6 +1,5 @@
 package eastereggs;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;
@@ -14,6 +13,7 @@ import eastereggs.key.KeyChain;
 import eastereggs.network.MessageHandler;
 import eastereggs.reference.Metadata;
 import eastereggs.reference.Reference;
+import eastereggs.structure.Structure;
 import net.minecraftforge.common.MinecraftForge;
 
 
@@ -41,13 +41,14 @@ public class EasterEggs
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
+        FMLCommonHandler.instance().bus().register(new KeyboardInput());
+        MinecraftForge.EVENT_BUS.register(new BlockEvents());
     }
 
     @Mod.EventHandler
     public void loadComplete(FMLLoadCompleteEvent event)
     {
-        FMLCommonHandler.instance().bus().register(new KeyboardInput());
-        MinecraftForge.EVENT_BUS.register(new BlockEvents());
         KeyChain.init();
+        Structure.init();
     }
 }
