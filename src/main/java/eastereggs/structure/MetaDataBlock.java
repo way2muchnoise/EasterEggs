@@ -17,4 +17,12 @@ public class MetaDataBlock
     {
         this(block, 0);
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof MetaDataBlock)
+            return this.block == ((MetaDataBlock) obj).block && this.metaData == ((MetaDataBlock) obj).metaData;
+        return super.equals(obj);
+    }
 }

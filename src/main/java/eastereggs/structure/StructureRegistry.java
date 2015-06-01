@@ -60,9 +60,38 @@ public class StructureRegistry
         return this.structures.get(id);
     }
 
-    public void placeBlock(MetaDataBlock block, EntityPlayer player)
+    public void placeBlock(MetaDataBlock block, WorldCoord coord, EntityPlayer player)
     {
         List<Structure> possibleStructures = this.structuresByBlock.get(block);
-        // @TODO: Check the structures
+        if (possibleStructures == null || possibleStructures.isEmpty()) return;
+        for (Structure structure : possibleStructures)
+        {
+            MetaDataBlock[][][] blocks = structure.getStructure();
+            int x, y, z;
+            y = -1;
+            for (MetaDataBlock[][] d2 : structure.getStructure())
+            {
+                y++;
+                z = -1;
+                for (MetaDataBlock[] d1 : d2)
+                {
+                    z++;
+                    x = -1;
+                    for (MetaDataBlock metaDataBlock : d1)
+                    {
+                        x++;
+                        if (metaDataBlock.equals(block))
+                            if(checkStructure(x, y, z, structure, coord, player))
+                                return;
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean checkStructure(int x, int y, int z, Structure structure, WorldCoord coord, EntityPlayer player)
+    {
+        // @TODO: do checks for the blocks
+        return x > 0; // this is bogus for now
     }
 }
