@@ -2,6 +2,8 @@ package eastereggs.structure;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,7 +39,7 @@ public class StructureRegistry
             {
                 for (MetaDataBlock metaDataBlock : d1)
                 {
-                    if (doneBlocks.contains(metaDataBlock))
+                    if (metaDataBlock == null || doneBlocks.contains(metaDataBlock))
                         break;
                     doneBlocks.add(metaDataBlock);
                     List<Structure> structures = this.structuresByBlock.get(metaDataBlock);
@@ -50,6 +52,7 @@ public class StructureRegistry
                     {
                         structures.add(structure);
                     }
+                    this.structuresByBlock.put(metaDataBlock, structures);
                 }
             }
         }
@@ -66,7 +69,6 @@ public class StructureRegistry
         if (possibleStructures == null || possibleStructures.isEmpty()) return;
         for (Structure structure : possibleStructures)
         {
-            MetaDataBlock[][][] blocks = structure.getStructure();
             int x, y, z;
             y = -1;
             for (MetaDataBlock[][] d2 : structure.getStructure())
@@ -80,9 +82,14 @@ public class StructureRegistry
                     for (MetaDataBlock metaDataBlock : d1)
                     {
                         x++;
-                        if (metaDataBlock.equals(block))
-                            if(checkStructure(x, y, z, structure, coord, player))
+                        if (metaDataBlock != null && metaDataBlock.equals(block))
+                        {
+                            if (checkStructure(x, y, z, structure, coord, player) || checkStructure(z, y, x, structure, coord, player))
+                            {
+                                structure.reaction(player);
                                 return;
+                            }
+                        }
                     }
                 }
             }
@@ -91,7 +98,27 @@ public class StructureRegistry
 
     private boolean checkStructure(int x, int y, int z, Structure structure, WorldCoord coord, EntityPlayer player)
     {
-        // @TODO: do checks for the blocks
-        return x > 0; // this is bogus for now
+        MetaDataBlock[][][] blocks = structure.getStructure();
+        World world = player.getEntityWorld();
+        for (int d3 = 0; d3 < blocks.length; d3++)
+        {
+            for (int d2 = 0; d3 < blocks[0].length; d2++)
+            {
+                for (int d1 = 0; d3 < blocks[0][0].length; d1++)
+                {
+                    Block block = world.getBlock(coord.getX() - x, coord.getY() - y, coord.getZ() - z);
+                    int metadata = world.getBlockMetadata(coord.getX() - x, coord.getY() - y, coord.getZ() - z);
+                    if (blocks[d3][d2][d1] == null)
+                    {
+                        if(block == Blocks.air)
+                            continue;
+                        return false;
+                    }
+                    if(!blocks[d3][d2][d1].equals(new MetaDataBlock(block, metadata)))
+                        return false;
+                }
+            }
+        }
+        return true;
     }
 }

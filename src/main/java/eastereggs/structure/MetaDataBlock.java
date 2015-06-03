@@ -25,4 +25,10 @@ public class MetaDataBlock
             return this.block == ((MetaDataBlock) obj).block && this.metaData == ((MetaDataBlock) obj).metaData;
         return super.equals(obj);
     }
+
+    @Override
+    public int hashCode()
+    {
+        return block.hashCode() ^ metaData;
+    }
 }
