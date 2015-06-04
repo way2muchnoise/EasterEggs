@@ -35,16 +35,23 @@ public abstract class Structure
                 return new MetaDataBlock[][][]
                 {
                     {
+                        {null, null, null},
+                        {null, diamondBlock, null},
+                        {null, null, null}
+                    },
+                    {
+                        {null, null, null},
+                        {diamondBlock, diamondBlock, diamondBlock},
+                        {null, null, null}
+                    },
+                    {
+                        {null, null, null},
                         {null, diamondBlock, null}
                     },
                     {
-                        {diamondBlock, diamondBlock, diamondBlock}
-                    },
-                    {
-                        {null, diamondBlock, null}
-                    },
-                    {
-                        {null, diamondBlock, null}
+                        {null, null, null},
+                        {null, diamondBlock, null},
+                        {null, null, null}
                     }
                 };
             }

@@ -1,5 +1,6 @@
 package eastereggs.structure;
 
+import eastereggs.utils.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -84,9 +85,10 @@ public class StructureRegistry
                         x++;
                         if (metaDataBlock != null && metaDataBlock.equals(block))
                         {
-                            if (checkStructure(x, y, z, structure, coord, player) || checkStructure(z, y, x, structure, coord, player))
+                            if (checkStructure(x, y, z, structure, coord, player))
                             {
                                 structure.reaction(player);
+                                LogHelper.info(structure.id + " build by " + player.getDisplayName());
                                 return;
                             }
                         }
@@ -96,18 +98,48 @@ public class StructureRegistry
         }
     }
 
-    private boolean checkStructure(int x, int y, int z, Structure structure, WorldCoord coord, EntityPlayer player)
+    private boolean checkStructure(int x, int y, int z, Structure structure, WorldCoord worldCoord, EntityPlayer entityPlayer)
+    {
+        World world = entityPlayer.getEntityWorld();
+        return checkStructureX(x, y, z, structure, worldCoord, world) || checkStructureZ(z, y, x, structure, worldCoord, world);
+    }
+
+    private boolean checkStructureX(int x, int y, int z, Structure structure, WorldCoord coord, World world)
     {
         MetaDataBlock[][][] blocks = structure.getStructure();
-        World world = player.getEntityWorld();
         for (int d3 = 0; d3 < blocks.length; d3++)
         {
-            for (int d2 = 0; d3 < blocks[0].length; d2++)
+            for (int d2 = 0; d2 < blocks[d3].length; d2++)
             {
-                for (int d1 = 0; d3 < blocks[0][0].length; d1++)
+                for (int d1 = 0; d1 < blocks[d3][d2].length; d1++)
                 {
-                    Block block = world.getBlock(coord.getX() - x, coord.getY() - y, coord.getZ() - z);
-                    int metadata = world.getBlockMetadata(coord.getX() - x, coord.getY() - y, coord.getZ() - z);
+                    Block block = world.getBlock(coord.getX() - x + d1, coord.getY() + y - d3, coord.getZ() - z + d2);
+                    int metadata = world.getBlockMetadata(coord.getX() - x + d1, coord.getY() + y - d3, coord.getZ() - z + d2);
+                    if (blocks[d3][d2][d1] == null)
+                    {
+                        if(block == Blocks.air)
+                            continue;
+                        return false;
+                    }
+                    if(!blocks[d3][d2][d1].equals(new MetaDataBlock(block, metadata)))
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkStructureZ(int x, int y, int z, Structure structure, WorldCoord coord, World world)
+    {
+        MetaDataBlock[][][] blocks = structure.getStructure();
+        for (int d3 = 0; d3 < blocks.length; d3++)
+        {
+            for (int d2 = 0; d2 < blocks[d3].length; d2++)
+            {
+                for (int d1 = 0; d1 < blocks[d3][d2].length; d1++)
+                {
+                    Block block = world.getBlock(coord.getX() - x + d2, coord.getY() + y - d3, coord.getZ() - z + d1);
+                    int metadata = world.getBlockMetadata(coord.getX() - x + d2, coord.getY() + y - d3, coord.getZ() - z + d1);
                     if (blocks[d3][d2][d1] == null)
                     {
                         if(block == Blocks.air)
