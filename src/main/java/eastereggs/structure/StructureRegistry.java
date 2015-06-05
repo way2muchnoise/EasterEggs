@@ -101,7 +101,17 @@ public class StructureRegistry
     private boolean checkStructure(int x, int y, int z, Structure structure, WorldCoord worldCoord, EntityPlayer entityPlayer)
     {
         World world = entityPlayer.getEntityWorld();
-        return checkStructureX(x, y, z, structure, worldCoord, world) || checkStructureZ(z, y, x, structure, worldCoord, world);
+        if(checkStructureX(x, y, z, structure, worldCoord, world))
+        {
+            removeStructureX(x, y, z, structure, worldCoord, world);
+            return true;
+        }
+        if (checkStructureZ(z, y, x, structure, worldCoord, world))
+        {
+            removeStructureZ(z, y, x, structure, worldCoord, world);
+            return true;
+        }
+        return false;
     }
 
     private boolean checkStructureX(int x, int y, int z, Structure structure, WorldCoord coord, World world)
@@ -152,5 +162,23 @@ public class StructureRegistry
             }
         }
         return true;
+    }
+
+    private void removeStructureX(int x, int y, int z, Structure structure, WorldCoord coord, World world)
+    {
+        MetaDataBlock[][][] blocks = structure.getStructure();
+        for (int d3 = 0; d3 < blocks.length; d3++)
+            for (int d2 = 0; d2 < blocks[d3].length; d2++)
+                for (int d1 = 0; d1 < blocks[d3][d2].length; d1++)
+                    world.setBlock(coord.getX() - x + d1, coord.getY() + y - d3, coord.getZ() - z + d2, Blocks.air);
+    }
+
+    private void removeStructureZ(int x, int y, int z, Structure structure, WorldCoord coord, World world)
+    {
+        MetaDataBlock[][][] blocks = structure.getStructure();
+        for (int d3 = 0; d3 < blocks.length; d3++)
+            for (int d2 = 0; d2 < blocks[d3].length; d2++)
+                for (int d1 = 0; d1 < blocks[d3][d2].length; d1++)
+                    world.setBlock(coord.getX() - x + d2, coord.getY() + y - d3, coord.getZ() - z + d1, Blocks.air);
     }
 }

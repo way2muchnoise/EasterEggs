@@ -31,4 +31,10 @@ public class MetaDataBlock
     {
         return block.hashCode() ^ metaData;
     }
+
+    @Override
+    public String toString()
+    {
+        return block.getUnlocalizedName() + ":" + metaData;
+    }
 }
