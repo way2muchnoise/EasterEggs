@@ -59,11 +59,6 @@ public class StructureRegistry
         }
     }
 
-    public Structure getStructureById(String id)
-    {
-        return this.structures.get(id);
-    }
-
     public void placeBlock(MetaDataBlock block, WorldCoord coord, EntityPlayer player)
     {
         List<Structure> possibleStructures = this.structuresByBlock.get(block);
