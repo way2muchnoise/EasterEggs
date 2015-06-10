@@ -13,7 +13,7 @@ import eastereggs.key.KeyChain;
 import eastereggs.network.MessageHandler;
 import eastereggs.reference.Metadata;
 import eastereggs.reference.Reference;
-import eastereggs.structure.Structure;
+import eastereggs.structure.Structures;
 import net.minecraftforge.common.MinecraftForge;
 
 
@@ -49,6 +49,6 @@ public class EasterEggs
     public void loadComplete(FMLLoadCompleteEvent event)
     {
         KeyChain.init();
-        Structure.init();
+        Structures.init();
     }
 }

@@ -1,5 +1,6 @@
 package eastereggs.structure;
 
+import eastereggs.api.Structure;
 import eastereggs.utils.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
