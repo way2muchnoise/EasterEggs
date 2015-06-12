@@ -1,6 +1,6 @@
 package eastereggs.api;
 
-import eastereggs.structure.MetaDataBlock;
+import eastereggs.utils.MetaDataBlock;
 import net.minecraft.entity.player.EntityPlayer;
 
 public abstract class Structure

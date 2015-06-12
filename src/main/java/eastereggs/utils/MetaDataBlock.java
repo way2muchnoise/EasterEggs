@@ -1,4 +1,4 @@
-package eastereggs.structure;
+package eastereggs.utils;
 
 import net.minecraft.block.Block;
 

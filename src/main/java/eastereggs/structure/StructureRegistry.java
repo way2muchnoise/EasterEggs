@@ -2,6 +2,8 @@ package eastereggs.structure;
 
 import eastereggs.api.Structure;
 import eastereggs.utils.LogHelper;
+import eastereggs.utils.MetaDataBlock;
+import eastereggs.utils.WorldCoord;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

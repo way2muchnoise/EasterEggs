@@ -1,6 +1,7 @@
 package eastereggs.structure;
 
 import eastereggs.api.Structure;
+import eastereggs.utils.MetaDataBlock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 

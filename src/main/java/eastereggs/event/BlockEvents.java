@@ -1,9 +1,9 @@
 package eastereggs.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import eastereggs.structure.MetaDataBlock;
+import eastereggs.utils.MetaDataBlock;
 import eastereggs.structure.StructureRegistry;
-import eastereggs.structure.WorldCoord;
+import eastereggs.utils.WorldCoord;
 import eastereggs.utils.LogHelper;
 import net.minecraftforge.event.world.BlockEvent;
 
