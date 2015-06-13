@@ -1,5 +1,8 @@
 package eastereggs.utils;
 
+/**
+ * Easy way to send around x, y, z
+ */
 public class WorldCoord
 {
     private int x, y, z;

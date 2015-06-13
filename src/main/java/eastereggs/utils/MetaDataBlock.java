@@ -2,6 +2,9 @@ package eastereggs.utils;
 
 import net.minecraft.block.Block;
 
+/**
+ * Storage object for {@link Block} and it's metadata int value
+ */
 public class MetaDataBlock
 {
     public Block block;
