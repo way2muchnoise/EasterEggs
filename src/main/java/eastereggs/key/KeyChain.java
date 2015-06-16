@@ -67,7 +67,7 @@ public abstract class KeyChain implements IKeyChain
             @Override
             public void executeServerSide(EntityPlayer player)
             {
-                player.addExperience(100);
+                player.addExperienceLevel(1);
             }
         });
     }
