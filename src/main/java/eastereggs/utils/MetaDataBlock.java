@@ -1,5 +1,6 @@
 package eastereggs.utils;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 
 /**
@@ -38,6 +39,6 @@ public class MetaDataBlock
     @Override
     public String toString()
     {
-        return block.getUnlocalizedName() + ":" + metaData;
+        return GameRegistry.findUniqueIdentifierFor(block).toString() + ":" + metaData;
     }
 }

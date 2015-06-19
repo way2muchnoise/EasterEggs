@@ -33,6 +33,11 @@ public class StructureRegistry
         this.structuresByBlock = new HashMap<MetaDataBlock, List<Structure>>();
     }
 
+    public Structure getById(String id)
+    {
+        return structures.get(id);
+    }
+
     public void addStructure(Structure structure)
     {
         this.structures.put(structure.id, structure);

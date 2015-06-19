@@ -34,7 +34,8 @@ public class Structures
                                 },
                                 {
                                         {null, null, null},
-                                        {null, diamondBlock, null}
+                                        {null, diamondBlock, null},
+                                        {null, null, null},
                                 },
                                 {
                                         {null, null, null},
