@@ -50,5 +50,6 @@ public class EasterEggs
     {
         KeyChain.init();
         Structures.init();
+        Structures.readFromFiles("structures");
     }
 }

@@ -8,13 +8,23 @@ import net.minecraft.block.Block;
  */
 public class MetaDataBlock
 {
-    public Block block;
-    public int metaData;
+    private Block block;
+    private int metaData;
 
     public MetaDataBlock(Block block, int metaData)
     {
         this.block = block;
         this.metaData = metaData;
+    }
+
+    public Block getBlock()
+    {
+        return block;
+    }
+
+    public int getMetaData()
+    {
+        return metaData;
     }
 
     public MetaDataBlock(Block block)

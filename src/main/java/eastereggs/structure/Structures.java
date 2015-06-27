@@ -52,4 +52,9 @@ public class Structures
             }
         });
     }
+
+    public static void readFromFiles(String folder)
+    {
+        // TODO: read all files in folder and parse
+    }
 }
