@@ -1,14 +1,51 @@
 package eastereggs.utils;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FileIO
 {
+    /**
+     * Get all file names
+     * @param path the folder path relative or absolute
+     * @param nested check folders in folder
+     * @return a list of file names
+     */
+    public static List<String> getFilesInDir(String path, boolean nested)
+    {
+        File dir = new File(path);
+        return getFilesInDir(dir, nested);
+    }
+
+    /**
+     * Get all file names
+     * @param dir the {@link File} of the folder
+     * @param nested check folders in folder
+     * @return a list of file names
+     */
+    public static List<String> getFilesInDir(File dir, boolean nested)
+    {
+        List<String> files = new LinkedList<String>();
+        File[] content = dir.listFiles();
+        if (content != null)
+        {
+            for (File file : content)
+            {
+                if (file.isDirectory() && nested)
+                    files.addAll(getFilesInDir(file, nested));
+                else if (file.isFile())
+                    files.add(file.getName());
+            }
+        }
+        return files;
+    }
+
     /**
      * Read file with given name
      * @param filename the file to read
